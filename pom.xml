@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.3.3</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<groupId>com.example</groupId>
+	<artifactId>pact-sandbox</artifactId>
+	<version>0.0.4-SNAPSHOT</version>
+	<name>pact-sandbox</name>
+	<description>Sandbox project for testing Pact Broker</description>
+
+	<properties>
+		<java.version>17</java.version>
+		<pact.version>4.6.14</pact.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+
+		<!-- For Pact Provider -->
+		<dependency>
+			<groupId>au.com.dius.pact.provider</groupId>
+			<artifactId>junit5</artifactId>
+			<version>${pact.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- For Pact Consumer -->
+		<dependency>
+			<groupId>au.com.dius.pact.consumer</groupId>
+			<artifactId>junit5</artifactId>
+			<version>${pact.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Pact broker support -->
+		<dependency>
+			<groupId>au.com.dius.pact.provider</groupId>
+			<artifactId>spring</artifactId>
+			<version>${pact.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.11.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>5.5.0</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>au.com.dius.pact.provider</groupId>
+				<artifactId>maven</artifactId>
+				<version>4.2.8</version>
+				<configuration>
+					<!-- https://docs.pact.io/implementation_guides/jvm/provider/maven -->
+					<pactBrokerUrl>http://localhost:9292</pactBrokerUrl>
+					<systemPropertyVariables>
+						<pact.verifier.publishResults>true</pact.verifier.publishResults>
+					</systemPropertyVariables>
+					<serviceProviders>
+						<!-- You can define as many as you need, but each must have a unique name -->
+						<serviceProvider>
+							<name>ItemProvider</name>
+							<!-- All the provider properties are optional, and have sensible defaults (shown below) -->
+							<protocol>http</protocol>
+							<host>localhost</host>
+							<port>8080</port>
+							<path>/</path>
+							<consumers>
+								<!-- Again, you can define as many consumers for each provider as you need, but each must have a unique name -->
+								<consumer>
+									<name>ItemConsumer</name>
+									<!--  currently supports a file path using pactSource or a URL using pactUrl -->
+									<pactUrl>http://localhost:9292/pacts/provider/ItemProvider/consumer/ItemConsumer/latest</pactUrl>
+<!--									<pactSource>target/pacts/ItemConsumer-ItemProvider.json</pactSource>-->
+								</consumer>
+							</consumers>
+						</serviceProvider>
+					</serviceProviders>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
