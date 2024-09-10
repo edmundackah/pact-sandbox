@@ -26,7 +26,7 @@ public class DeleteItemPactTest {
     }
 
     @Test
-    @PactTestFor(providerName = "ItemProvider")
+    @PactTestFor(pactMethod = "deleteItem")
     void testDeleteItem(MockServer mockServer) {
         given()
                 .delete(mockServer.getUrl() + "/item/3")

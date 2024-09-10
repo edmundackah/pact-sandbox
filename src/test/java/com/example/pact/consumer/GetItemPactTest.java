@@ -33,7 +33,7 @@ class GetItemPactTest {
     }
 
     @Test
-    @PactTestFor(providerName = "ItemProvider")
+    @PactTestFor(pactMethod = "getItem")
     void testGetItem(MockServer mockServer) {
         // Call the endpoint and verify response
         Response response = RestAssured

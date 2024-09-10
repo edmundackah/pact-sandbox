@@ -11,7 +11,7 @@
 
 	<groupId>com.example</groupId>
 	<artifactId>pact-sandbox</artifactId>
-	<version>0.0.4-SNAPSHOT</version>
+	<version>0.0.5-SNAPSHOT</version>
 	<name>pact-sandbox</name>
 	<description>Sandbox project for testing Pact Broker</description>
 
@@ -31,13 +31,13 @@
 		</dependency>
 
 
-		<!-- For Pact Provider -->
-		<dependency>
-			<groupId>au.com.dius.pact.provider</groupId>
-			<artifactId>junit5</artifactId>
-			<version>${pact.version}</version>
-			<scope>test</scope>
-		</dependency>
+<!--		&lt;!&ndash; For Pact Provider &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>au.com.dius.pact.provider</groupId>-->
+<!--			<artifactId>junit5</artifactId>-->
+<!--			<version>${pact.version}</version>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
 		<!-- For Pact Consumer -->
 		<dependency>
 			<groupId>au.com.dius.pact.consumer</groupId>
@@ -81,7 +81,7 @@
 			<plugin>
 				<groupId>au.com.dius.pact.provider</groupId>
 				<artifactId>maven</artifactId>
-				<version>4.2.8</version>
+				<version>4.3.6</version>
 				<configuration>
 					<!-- https://docs.pact.io/implementation_guides/jvm/provider/maven -->
 					<pactBrokerUrl>http://localhost:9292</pactBrokerUrl>
@@ -103,7 +103,6 @@
 									<name>ItemConsumer</name>
 									<!--  currently supports a file path using pactSource or a URL using pactUrl -->
 									<pactUrl>http://localhost:9292/pacts/provider/ItemProvider/consumer/ItemConsumer/latest</pactUrl>
-<!--									<pactSource>target/pacts/ItemConsumer-ItemProvider.json</pactSource>-->
 								</consumer>
 							</consumers>
 						</serviceProvider>

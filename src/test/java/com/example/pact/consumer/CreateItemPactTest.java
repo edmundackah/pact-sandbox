@@ -53,7 +53,7 @@ public class CreateItemPactTest {
     }
 
     @Test
-    @PactTestFor(providerName = "ItemProvider") // Use a mock server on port 8080
+    @PactTestFor(pactMethod = "saveItem")
     void testCreateItem(MockServer mockServer) {
         // Define the request body
         String requestBody = "{ \"id\": \"1234\", \"name\": \"New Item\", \"description\": \"A new item description\" }";
